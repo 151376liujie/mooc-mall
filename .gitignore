@@ -11,3 +11,9 @@ target/
 *.project
 
 *.settings/
+
+*.log
+
+*.cache
+
+*.tmp
