@@ -41,10 +41,35 @@
         WHERE email=#{email}
     </select>
 
+    <select id="selectQuestion" resultType="java.lang.String">
+        SELECT question
+        FROM mmall_user
+        WHERE username=#{username}
+    </select>
+    <select id="checkAnswer" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM mmall_user
+        WHERE username=#{username}
+        AND question=#{question}
+        AND answer=#{answer}
+    </select>
+    <select id="checkUserPassword" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM mmall_user
+        WHERE id=#{userId}
+        AND password=#{oldPass}
+    </select>
+    <select id="checkUserEmail" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM mmall_user
+        WHERE email=#{email}
+        AND id!=#{userId}
+    </select>
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from mmall_user
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+        delete from mmall_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="com.mall.pojo.User">
     insert into mmall_user (id, username, password, 
       email, phone, question, 
@@ -52,8 +77,7 @@
       update_time)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, 
-      #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, now(), now()
-      )
+      #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, now(), now())
   </insert>
     <insert id="insertSelective" parameterType="com.mall.pojo.User">
         insert into mmall_user
@@ -168,4 +192,9 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <update id="updateUserPassword">
+        UPDATE mmall_user
+        SET password = #{newPass},update_time=now()
+        WHERE username=#{username}
+    </update>
 </mapper>

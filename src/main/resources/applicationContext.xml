@@ -13,6 +13,8 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <context:property-placeholder location="classpath:jdbc.properties,classpath:ftp.properties,classpath:mall.properties" />
+
     <context:component-scan base-package="com.mall.service" />
 
     <aop:aspectj-autoproxy />

@@ -1,6 +1,8 @@
 package com.mall.util;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by geely
@@ -31,21 +33,21 @@ public class MD5Util {
      * @param charsetname
      * @return
      */
-    private static String MD5Encode(String origin, String charsetname) {
-        String resultString = null;
+    private static String MD5Encode(String origin, String charsetname) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        String resultString = origin;
         try {
-            resultString = new String(origin);
             MessageDigest md = MessageDigest.getInstance("MD5");
             if (charsetname == null || "".equals(charsetname))
                 resultString = byteArrayToHexString(md.digest(resultString.getBytes()));
             else
                 resultString = byteArrayToHexString(md.digest(resultString.getBytes(charsetname)));
         } catch (Exception exception) {
+            throw exception;
         }
         return resultString.toUpperCase();
     }
 
-    public static String MD5EncodeUtf8(String origin) {
+    public static String MD5EncodeUtf8(String origin) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         origin = origin + PropertiesUtil.getProperty("password.salt", "");
         return MD5Encode(origin, "utf-8");
     }

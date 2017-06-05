@@ -1,8 +1,12 @@
 package com.mall.pojo;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Cart {
+public class Cart implements Serializable{
     private Integer id;
 
     private Integer userId;
@@ -85,5 +89,11 @@ public class Cart {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 }
